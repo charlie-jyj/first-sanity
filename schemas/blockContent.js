@@ -1,4 +1,5 @@
-import {defineType, defineArrayMember} from 'sanity'
+import {defineType, defineArrayMember, defineField} from 'sanity'
+import script from './script'
 
 /**
  * This is the schema definition for the rich text fields used for
@@ -28,9 +29,13 @@ export default defineType({
         {title: 'H2', value: 'h2'},
         {title: 'H3', value: 'h3'},
         {title: 'H4', value: 'h4'},
+        {title: 'H5', value: 'h5'},
         {title: 'Quote', value: 'blockquote'},
       ],
-      lists: [{title: 'Bullet', value: 'bullet'}],
+      lists: [
+        {title: 'Bullet', value: 'bullet'},
+        {title: 'Numbered', value: 'number'},
+      ],
       // Marks let you mark up inline text in the block editor.
       marks: {
         // Decorators usually describe a single property – e.g. a typographic
@@ -62,6 +67,35 @@ export default defineType({
     defineArrayMember({
       type: 'image',
       options: {hotspot: true},
+      fields: [
+         defineField({
+          name: 'caption',
+          title: 'Caption',
+          type: 'string',
+         }),
+         defineField({
+          name: 'alt',
+          title: 'Alt',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+         })
+      ],
+    }),
+
+    defineArrayMember({
+      type: 'file',
+    }),
+
+    defineArrayMember({
+      type: 'code'
+    }),
+    
+    defineArrayMember({
+      type: 'imageGallery'
+    }),
+
+    defineArrayMember({
+      type: 'script',
     }),
   ],
 })
